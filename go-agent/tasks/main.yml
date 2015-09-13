@@ -1,0 +1,21 @@
+    - name: Install go repository
+      apt_repository: repo="deb http://dl.bintray.com/gocd/gocd-deb/ /" state=present update_cache=yes
+      sudo: yes
+
+    - name: Install avahi
+      apt: pkg=avahi-daemon
+      sudo: yes
+
+    - name: Install go repository key
+      apt_key: url=https://bintray.com/user/downloadSubjectPublicKey?username=gocd
+      sudo: yes
+
+    - name: Install go agent
+      apt: pkg=go-agent force=yes
+      sudo: yes
+
+    - name: Update go server details
+      lineinfile: dest=/etc/default/go-agent regexp='GO_SERVER=127\.0\.0\.1' line='GO_SERVER=go-server.local'
+      sudo: yes
+      notify:
+      - Restart go agent

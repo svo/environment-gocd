@@ -1,0 +1,19 @@
+    - name: Install go repository
+      apt_repository: repo="deb http://dl.bintray.com/gocd/gocd-deb/ /" state=present update_cache=yes
+      sudo: yes
+
+    - name: Install avahi
+      apt: pkg=avahi-daemon
+      sudo: yes
+
+    - name: Install git
+      apt: pkg=git-core
+      sudo: yes
+
+    - name: Install go repository key
+      apt_key: url=https://bintray.com/user/downloadSubjectPublicKey?username=gocd
+      sudo: yes
+
+    - name: Install go server
+      apt: pkg=go-server force=yes
+      sudo: yes
