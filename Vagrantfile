@@ -25,22 +25,42 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  config.vm.define "agent" do |agent|
-    agent.vm.box_url = "https://vagrantcloud.com/ubuntu/trusty64"
-    agent.vm.box = "ubuntu/trusty64"
+  config.vm.define "agent_1" do |agent_1|
+    agent_1.vm.box_url = "https://vagrantcloud.com/ubuntu/trusty64"
+    agent_1.vm.box = "ubuntu/trusty64"
 
-    agent.vm.hostname = "go-server"
-    agent.vm.network :private_network, type: "dhcp"
+    agent_1.vm.hostname = "go-agent-1"
+    agent_1.vm.network :private_network, type: "dhcp"
 
-    agent.vm.provision "ansible" do |ansible|
+    agent_1.vm.provision "ansible" do |ansible|
       ansible.playbook = "agent.yml"
     end
 
     if Vagrant.has_plugin?("vagrant-cachier")
-      agent.cache.scope = :machine
+      agent_1.cache.scope = :machine
     end
 
-    agent.vm.provider :virtualbox do |vb|
+    agent_1.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    end
+  end
+
+  config.vm.define "agent_2" do |agent_2|
+    agent_2.vm.box_url = "https://vagrantcloud.com/ubuntu/trusty64"
+    agent_2.vm.box = "ubuntu/trusty64"
+
+    agent_2.vm.hostname = "go-agent-2"
+    agent_2.vm.network :private_network, type: "dhcp"
+
+    agent_2.vm.provision "ansible" do |ansible|
+      ansible.playbook = "agent.yml"
+    end
+
+    if Vagrant.has_plugin?("vagrant-cachier")
+      agent_2.cache.scope = :machine
+    end
+
+    agent_2.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     end
   end
