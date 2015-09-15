@@ -5,6 +5,9 @@
     - name: Install avahi
       apt: pkg=avahi-daemon
       sudo: yes
+      notify:
+      - Update avahi configuration
+      - Restart avahi
 
     - name: Install go repository key
       apt_key: url=https://bintray.com/user/downloadSubjectPublicKey?username=gocd
