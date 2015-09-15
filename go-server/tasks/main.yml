@@ -5,9 +5,6 @@
     - name: Install avahi
       apt: pkg=avahi-daemon
       sudo: yes
-      notify:
-      - Update avahi configuration
-      - Restart avahi
 
     - name: Install git
       apt: pkg=git-core

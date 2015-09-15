@@ -1,11 +1,3 @@
-    - name: Update avahi configuration
-      lineinfile: dest=/etc/avahi/avahi-daemon.conf regexp='#deny-interfaces=eth1' line='deny-interfaces=eth0'
-      sudo: yes
-
-    - name: Restart avahi
-      service: name=avahi-daemon state=restarted
-      sudo: yes
-
     - name: Restart go server
       service: name=go-server state=restarted
       sudo: yes
